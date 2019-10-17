@@ -34,9 +34,12 @@ import AsyncStorage from '@react-native-community/async-storage';
         }
     }
 
+    
         return(<View style={theme}>
+            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
             <Image style={{height:20,width:20}} source={images.pour_rain}/>
             <Text>WeatherApp</Text>
+            </View>
         </View>)
     
 }

@@ -1,30 +1,30 @@
 import React, {Fragment,Component,useState, useEffect,useContext} from 'react';
 import {
   View,
-  Text,Image,FlatList,TouchableOpacity,ScrollView,StyleSheet
+  Text,Image,FlatList,TouchableOpacity,ScrollView,StyleSheet,ActivityIndicator
 } from 'react-native';
 import images from '../res/images';
 import LocationContext from '../context/LocationContext';
 import AsyncStorage from '@react-native-community/async-storage';
+import LanguageContext from '../context/LanguageContext';
+import UnitContext from '../context/UnitContext';
 
 
 const hourlyData=[]
 var advanceData=[]
-var obj = {flex:1,
-  backgroundColor:"#fff000"}
+
 
 const Home=({navigation})=>{
      
   const [state,setState]=useState({})
   const [location, setLocation] = useContext(LocationContext)
   const [theme,setTheme]=useState(Styles.light)
+  const languageContext=useContext(LanguageContext)
+  const unitContext=useContext(UnitContext)  
 
-  //console.log(location)
   useEffect(()=>{
-   //get theme from async
-   // getTheme()
-    
-   const subscription = navigation.addListener('willFocus',()=>{
+   const subscription = navigation.addListener('didFocus',()=>{
+     console.log('didFocus home')
      getTheme()
      fetchData() 
     })
@@ -34,15 +34,15 @@ const Home=({navigation})=>{
   },[Object.values(location)]);
 
   const fetchData=()=>{
-    //console.log("lat:"+location.lat,"lon:"+location.lon)
-    fetch(`https://api.darksky.net/forecast/71cc1e8d001a106197699f73a2b45b05/${location.lat},${location.lon}`)
+   console.log(location) 
+   console.log(languageContext)
+   console.log(unitContext.selectedUnit)
+    fetch(`https://api.darksky.net/forecast/71cc1e8d001a106197699f73a2b45b05/${location.lat},${location.lon}?lang=${languageContext.selectedLang.defaultLang}&units=${unitContext.selectedUnit.defaultUnit}`)
     .then((response)=>response.json())
     .then((responseJson)=>{
       console.log(responseJson)
       const data = responseJson.hourly.data
-     // console.log(data)
       const dailyData = responseJson.daily.data     
-      // console.log(dailyData)
       
       if(hourlyData.length>0){
         hourlyData.length=0
@@ -86,7 +86,7 @@ const Home=({navigation})=>{
        advanceData.push({temp:d,icon:iconType,day:fullDay})
        
        }
-       setState({...state,city:responseJson.timezone,temp:responseJson.currently.temperature,iconTop:responseJson.currently.icon,weatherData:hourlyData,weatherAdvanceData:advanceData,})//testTheme:obj
+       setState({...state,summary:responseJson.currently.summary,city:responseJson.timezone,temp:responseJson.currently.temperature,iconTop:responseJson.currently.icon,weatherData:hourlyData,weatherAdvanceData:advanceData,})
        
     }).catch((error)=>{
       console.log(error)
@@ -100,7 +100,6 @@ const Home=({navigation})=>{
         console.log(value)
         console.log("inside getteheme HOME")
         if(value!=null){
-          // obj = JSON.parse(value)
           const test = JSON.parse(value)
           console.log(test)
           setTheme(test)
@@ -148,6 +147,19 @@ const Home=({navigation})=>{
     }
   }
 
+  function displayTemperature(temp){
+     
+      return(
+      (unitContext.selectedUnit.defaultUnit=="si")? 
+      <Text style={{fontSize:20}}>{temp} &deg;C</Text> :
+      <Text style={{fontSize:20}}>{temp} K</Text>
+      )}
+
+  if(advanceData.length==0){
+    return(<View style={theme}>
+        <ActivityIndicator style={{flex:1}} size="large" color="#0000ff" alignSelf='center' />
+    </View>) 
+  }
 
     return(
     <ScrollView style={theme}>
@@ -160,13 +172,19 @@ const Home=({navigation})=>{
       <TouchableOpacity onPress={()=>navigation.navigate('Setting')}>
       <Text>SETTING</Text>
       </TouchableOpacity>
-      </View>
-      <Text>{location.lat}</Text>
 
+      <TouchableOpacity onPress={()=>alert("dfds")}>
+      <Image source={images.menu_verticle_icon} style={{width:30,height:30}}/>
+      </TouchableOpacity>
+
+      </View>
+    
       <View style={{flexDirection:'row',justifyContent:'space-between',}}>
         <View style={{marginLeft:10}} >
-          <Text style={{fontSize:20}}>{state.temp}</Text>
+          {displayTemperature(state.temp)}
           <Text style={{fontSize:15}}>{state.city}</Text> 
+          <Text style={{fontSize:25}}>{state.summary}</Text> 
+          
        </View>
        
        <View>
@@ -180,21 +198,22 @@ const Home=({navigation})=>{
         data={state.weatherData}
         renderItem={({item})=><View style={{marginHorizontal:5}}>
           {selectIcon(item.icon)}
-          <Text style={{marginHorizontal:5}}>{item.temp}</Text>
+          {displayTemperature(item.temp)}
           <Text style={{marginHorizontal:5}}>{item.time}</Text>
           </View>
           }
         style={{marginVertical:40}}
+        keyExtractor={(item, index) => index.toString()}
       />
 
       <FlatList
-        //data={state.weatherAdvanceData}
         data={state.weatherAdvanceData}
         renderItem={({item})=><View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
             <Text style={{fontSize:20}}>{item.day}</Text>
-            <Text style={{fontSize:20}}>{item.temp}</Text>
+            {displayTemperature(item.temp)}
             {selectIcon(item.icon)}
           </View>}
+          keyExtractor={(item, index) => index.toString()}
       />
 
     
@@ -204,8 +223,8 @@ const Home=({navigation})=>{
 
 export default Home
 
+
 const Styles=StyleSheet.create({
-    
   light:{
       flex:1,
       backgroundColor:"#e6a893"

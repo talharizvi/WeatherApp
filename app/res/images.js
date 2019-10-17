@@ -29,5 +29,6 @@ const images={
 	sunny_day: require('./images/sunny-day.png'),
 	temperature: require('./images/temperature.png'),
 	windy_day: require('./images/windy-day.png'),
+	menu_verticle_icon:require('./images/menu-vertical-icon-48.png'),
 }
 export default images;

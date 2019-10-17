@@ -4,19 +4,19 @@ import {
   Text,Image,Switch, TouchableOpacity,StyleSheet
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import CardView from '../components/CardView';
+import ItemView from '../components/ItemView';
 
 const Setting=({navigation})=>{
 
-        // var[switchValue,setSwitchValue]=useState(()=>{
-        //     const initialSwitch=getSwitchFromAsync()
-        //     return initialSwitch
-        // })
         var [switchValue,setSwitchValue]=useState(false)
         var [theme,setTheme]=useState(Styles.light)
         
         useEffect(()=>{
+           navigation.addListener ('didFocus', () =>{
             getAsyncData()
-        },[switchValue])
+        });
+        },[])
        
 
         const storeTheme=async(value,switchState)=>{
@@ -30,44 +30,26 @@ const Setting=({navigation})=>{
                 console.log(e.message)
             }
         }
-
-        function testFun(){
-            console.log('adasdad')
-            return true
-        }
-
-        async function getSwitchFromAsync(){
-            console.log('getSwitchFromAsyncdasdas')
-            try{
-                console.log('getSwitchFromAsync')
-               // var values = await AsyncStorage.multiGet(['theme_key','switch_key'])
-               const value = await AsyncStorage.getItem('switch_key')  
-               console.log("getSwitchFromAsync",value)
-               const switchTest=value 
-            
-                if(switchTest!=null){
-                    console.log('inside if')
-                    return switchTest
-                }else{
-                    console.log('inside else')
-                    return true
-                }
-                
-            }catch(e){
-                console.log(e.message)
-            }
-        }
+       
        
 
         const getAsyncData=async()=>{
             console.log("inside async data")
             try{
-               var values = await AsyncStorage.multiGet(['theme_key','switch_key'])
-               console.log(values)
-               const theme = JSON.parse(values[0])
-               const switchTest = JSON.parse(values[1])
-               console.log(theme,switchTest)
-               setTheme(theme)
+               //var values = await AsyncStorage.multiGet(['theme_key','switch_key'])
+               const value = await AsyncStorage.getItem('theme_key')
+               const switchValue = await AsyncStorage.getItem('switch_key')
+               const theme=JSON.parse(value)
+               const switchParsed=JSON.parse(switchValue)
+               console.log(theme)
+               if(theme!=null){
+                   //theme=Styles.light
+                   setTheme(theme)
+               }
+               console.log(theme)
+               console.log("SWITCH",switchParsed)
+               setSwitchValue(switchParsed)     
+               
             }catch(e){
                 console.log(e.message)
             }
@@ -85,12 +67,15 @@ const Setting=({navigation})=>{
                 setTheme(Styles.light)
                 storeTheme(Styles.light,false)
             }
+            // setTimeout(() => {
+            //    // navigation.navigate('Home')
+            // }, 2000);
         }
 
     
         return(
         console.log("inside return"),
-        console.log(switchValue),
+        console.log(switchValue,theme),
         
         <View style={theme}>
             <Text>Setting</Text>
@@ -98,8 +83,12 @@ const Setting=({navigation})=>{
             <Text style={{fontSize:20}}>Theme</Text>    
             <Switch 
             onValueChange={toggleSwitch}
-            value={switchValue}/>
+            value={switchValue}/> 
             </View>
+           
+            <CardView navigation={navigation} itemName="Language" route='Lang'/>
+            <CardView navigation={navigation} itemName="ChangeUnit" route='Unit'/>
+            {/* <ItemView itemName="ChangeUnit" backgroundColor="#f58938"/> */}
         </View>)
     
 }

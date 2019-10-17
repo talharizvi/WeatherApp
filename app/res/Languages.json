@@ -1,0 +1,89 @@
+{
+    "data":[
+        {
+           "code": "ar",
+           "lang":"Arabic"
+        },
+        {
+            "code": "az",
+            "lang":"Azerbaijani"
+        },
+        {
+            "code":"be",
+            "lang":"Belarusian"
+        },
+        {
+            "code": "bg",
+            "lang":"Bulgarian"
+        },
+        {
+            "code": "bn",
+            "lang":"Bengali"
+        },
+        {
+            "code":"bs",
+            "lang":"Bosnian"
+        },
+        {
+            "code":"ca",
+            "lang":"Catalan"   
+        },
+        {
+            "code":"cs",
+            "lang":"Czech"
+        },
+        {
+           "code": "da",
+           "lang":"Danish"
+        },
+        {
+            "code":"de",
+            "lang":"German"
+        },
+        {
+            "code":"el",
+            "lang":"Greek"
+        },
+        {
+            "code":"en",
+            "lang":"English"
+        },
+        {
+            "code":"eo",
+            "lang":"Esperanto"
+        },
+        {
+            "code":"es",
+            "lang":"Spanish"
+        },
+        {
+            "code":"et",
+            "lang":"Estonian"
+        },
+        {
+            "code":"fi",
+            "lang":"Finnish"
+        },
+        {
+            "code":"fr",
+            "lang":"French"
+        },
+        {
+            "code":"he",
+            "lang":"Hebrew"
+        },
+        {
+            "code":"hi",
+            "lang":"Hindi"
+        },
+        {
+            "code":"hr",
+            "lang":"Croatian"
+        },
+        {
+            "code":"hu",
+            "lang":"Hungarian"
+        }
+    ]
+
+}

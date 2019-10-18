@@ -1,7 +1,7 @@
 import React, {Fragment,Component,useState, useEffect,useContext} from 'react';
 import {
   View,
-  Text,Image,FlatList,TouchableOpacity,ScrollView,StyleSheet,ActivityIndicator
+  Text,Image,FlatList,TouchableOpacity,ScrollView,StyleSheet,ActivityIndicator,SafeAreaView
 } from 'react-native';
 import images from '../res/images';
 import LocationContext from '../context/LocationContext';
@@ -162,6 +162,7 @@ const Home=({navigation})=>{
   }
 
     return(
+    <SafeAreaView style={theme}>  
     <ScrollView style={theme}>
     
       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
@@ -218,6 +219,7 @@ const Home=({navigation})=>{
 
     
     </ScrollView>
+    </SafeAreaView>
     )
 }
 

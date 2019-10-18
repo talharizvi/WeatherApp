@@ -1,7 +1,7 @@
 import React, {useContext,useState, useEffect} from 'react';
 import {
   View,
-  Text,Image,Switch, TouchableOpacity,StyleSheet
+  Text,Image,Switch, TouchableOpacity,StyleSheet,SafeAreaView
 } from 'react-native';
 import ItemView from '../components/ItemView';
 import UnitContext from '../context/UnitContext';
@@ -29,6 +29,7 @@ const TempUnits=()=>{
         }
     }
     return(
+        <SafeAreaView style={theme}>    
     <View style={theme}>
         <TouchableOpacity onPress={()=>{
             selectedUnit.unitDispatch({type:'unit',value:'si'})
@@ -41,7 +42,9 @@ const TempUnits=()=>{
         }}>
         <ItemView itemName="US" backgroundColor="#f58938"/>
         </TouchableOpacity>
-    </View>)
+    </View>
+    </SafeAreaView>
+    )
 }
 
 export default TempUnits

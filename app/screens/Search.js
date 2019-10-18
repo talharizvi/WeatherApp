@@ -1,7 +1,7 @@
 import React, {Component,useState,useEffect,useContext} from 'react';
 import {
   View,
-  Text,Image,FlatList,TextInput,TouchableOpacity,StyleSheet
+  Text,Image,FlatList,TextInput,TouchableOpacity,StyleSheet,SafeAreaView
 } from 'react-native';
 import LocationContext from '../context/LocationContext';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -46,6 +46,7 @@ const Search=({navigation})=>{
       };
 
         return(
+    <SafeAreaView style={theme}>
         <View style={theme}>
             <Text>Search</Text>
             <TextInput
@@ -69,7 +70,9 @@ const Search=({navigation})=>{
             />
            
 
-        </View>)
+        </View>
+        </SafeAreaView>
+        )
     
 }
 

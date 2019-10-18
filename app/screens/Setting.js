@@ -1,7 +1,7 @@
 import React, {Component, useState, useEffect} from 'react';
 import {
   View,
-  Text,Image,Switch, TouchableOpacity,StyleSheet
+  Text,Image,Switch, TouchableOpacity,StyleSheet,SafeAreaView
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import CardView from '../components/CardView';
@@ -76,7 +76,7 @@ const Setting=({navigation})=>{
         return(
         console.log("inside return"),
         console.log(switchValue,theme),
-        
+        <SafeAreaView style={theme}>
         <View style={theme}>
             <Text>Setting</Text>
             <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
@@ -89,7 +89,9 @@ const Setting=({navigation})=>{
             <CardView navigation={navigation} itemName="Language" route='Lang'/>
             <CardView navigation={navigation} itemName="ChangeUnit" route='Unit'/>
             {/* <ItemView itemName="ChangeUnit" backgroundColor="#f58938"/> */}
-        </View>)
+        </View>
+        </SafeAreaView>
+        )
     
 }
 

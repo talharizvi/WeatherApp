@@ -1,7 +1,7 @@
 import React, {Fragment,Component,useState, useEffect,useContext} from 'react';
 import {
   View,
-  Text,Image,FlatList,TouchableOpacity,ScrollView,StyleSheet, ActivityIndicator
+  Text,Image,FlatList,TouchableOpacity,ScrollView,StyleSheet, ActivityIndicator,SafeAreaView
 } from 'react-native';
 import Lang from '../res/Languages.json';
 import LanguageContext from '../context/LanguageContext';
@@ -41,7 +41,7 @@ import ItemView from '../components/ItemView';
         </View>) 
       }
         return(
-        
+        <SafeAreaView style={theme}>
         <View style={theme}>
             <Text>Choose Languages</Text>
             <FlatList
@@ -59,7 +59,9 @@ import ItemView from '../components/ItemView';
             />
 
             
-        </View>)
+        </View>
+        </SafeAreaView>
+        )
     
 }
 

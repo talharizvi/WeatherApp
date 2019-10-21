@@ -36,19 +36,19 @@ const Setting=({navigation})=>{
         const getAsyncData=async()=>{
             console.log("inside async data")
             try{
-               //var values = await AsyncStorage.multiGet(['theme_key','switch_key'])
                const value = await AsyncStorage.getItem('theme_key')
                const switchValue = await AsyncStorage.getItem('switch_key')
                const theme=JSON.parse(value)
                const switchParsed=JSON.parse(switchValue)
                console.log(theme)
                if(theme!=null){
-                   //theme=Styles.light
                    setTheme(theme)
                }
                console.log(theme)
                console.log("SWITCH",switchParsed)
-               setSwitchValue(switchParsed)     
+               if(switchParsed!=null){
+                   setSwitchValue(switchParsed)     
+               }
                
             }catch(e){
                 console.log(e.message)
@@ -57,19 +57,18 @@ const Setting=({navigation})=>{
 
         function toggleSwitch(){
             console.log("before",switchValue)
-            setSwitchValue(!switchValue)
+           // setSwitchValue(!switchValue)
             console.log("after",theme)
            
             if(theme==Styles.light){
                 setTheme(Styles.dark)
+                setSwitchValue(true)
                 storeTheme(Styles.dark,true)
             }else{
                 setTheme(Styles.light)
+                setSwitchValue(false)
                 storeTheme(Styles.light,false)
             }
-            // setTimeout(() => {
-            //    // navigation.navigate('Home')
-            // }, 2000);
         }
 
     
@@ -88,6 +87,7 @@ const Setting=({navigation})=>{
            
             <CardView navigation={navigation} itemName="Language" route='Lang'/>
             <CardView navigation={navigation} itemName="ChangeUnit" route='Unit'/>
+            <CardView navigation={navigation} itemName="Search" route='Search'/>
             {/* <ItemView itemName="ChangeUnit" backgroundColor="#f58938"/> */}
         </View>
         </SafeAreaView>

@@ -19,63 +19,32 @@ import  {initialLang} from './app/store/reducers/languageReducer';
 const AppNavigator = createStackNavigator({
   Splash:{
     screen:Splash,
-    navigationOptions: {
-      header: null,
-    }
   },
   Home: {
     screen: Home,
-    navigationOptions: {
-      header: null,
-    }
   },
   Setting:{
     screen:Setting,
-    navigationOptions: {
-      header: null,
-    }
   },
   Search:{
     screen:Search,
-    navigationOptions: {
-      header: null,
-    }
   },
   Lang:{
     screen:Language,
-    navigationOptions: {
-      header: null,
-    }
   },
   Unit:{
     screen:TempUnit,
-    navigationOptions: {
-      header: null,
-    }
   }
+},{
+  defaultNavigationOptions: {
+    header: null,
+}
 });
 
 const AppContainer = createAppContainer(AppNavigator)
 
-// const initialLang={
-//   defaultLang:"en"
-// }
-
-// const reducer = (state, action) => {
-// 	switch (action.type) {
-    
-//     case 'lang':
-//       return {
-//         defaultLang:action.value
-//      }
-	
-// 		default:
-// 			return state
-// 	}
-// }
  
 const App =()=>{ 
-  //const [lang,dispatch]=useReducer(reducer,initialLang)
   const [lang,dispatch]=useReducer(langReducer,initialLang) 
   const [unit,unitDispatch]=useReducer(unitReducer,initialUnit)  
   return(

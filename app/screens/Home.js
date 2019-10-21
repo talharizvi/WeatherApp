@@ -1,4 +1,4 @@
-import React, {Fragment,Component,useState, useEffect,useContext} from 'react';
+import React, {Fragment,Component,useState, useEffect,useContext,useReducer} from 'react';
 import {
   View,
   Text,Image,FlatList,TouchableOpacity,ScrollView,StyleSheet,ActivityIndicator,SafeAreaView
@@ -8,23 +8,58 @@ import LocationContext from '../context/LocationContext';
 import AsyncStorage from '@react-native-community/async-storage';
 import LanguageContext from '../context/LanguageContext';
 import UnitContext from '../context/UnitContext';
+import NetInfo from "@react-native-community/netinfo";
+
 
 
 const hourlyData=[]
 var advanceData=[]
 
+const initialState={
+    summary:'',
+    city:'',
+    temp:'',
+    iconTop:'',
+    weatherData:[],
+    weatherAdvanceData:[]
+}
 
-const Home=({navigation})=>{
+const reducer=(state,action)=>{
+    switch(action.type){
+        case 'FETCH_SUCCESS':
+                console.log("payload",action.payload)
+        return{
+            summary:action.payload.summary,
+            city:action.payload.city,
+            temp:action.payload.temp,
+            iconTop:action.payload.iconTop,
+            weatherData:action.payload.weatherData,
+            weatherAdvanceData:action.payload.weatherAdvanceData
+        }
+        default:
+             return state         
+    }
+}
+
+const Home2=({navigation})=>{
      
-  const [state,setState]=useState({})
+//  const [state,setState]=useState({})
   const [location, setLocation] = useContext(LocationContext)
   const [theme,setTheme]=useState(Styles.light)
   const languageContext=useContext(LanguageContext)
   const unitContext=useContext(UnitContext)  
-
+//
+  const [state,dispatch] = useReducer(reducer,initialState)  
+//
   useEffect(()=>{
    const subscription = navigation.addListener('didFocus',()=>{
      console.log('didFocus home')
+    //  NetInfo.fetch().then(state => {
+    //   console.log("Connection type", state.type);
+    //   console.log("Is connected?", state.isConnected);
+    //   alert(state.type)
+    //   alert(state.isConnected)
+    // });
      getTheme()
      fetchData() 
     })
@@ -86,7 +121,8 @@ const Home=({navigation})=>{
        advanceData.push({temp:d,icon:iconType,day:fullDay})
        
        }
-       setState({...state,summary:responseJson.currently.summary,city:responseJson.timezone,temp:responseJson.currently.temperature,iconTop:responseJson.currently.icon,weatherData:hourlyData,weatherAdvanceData:advanceData,})
+       dispatch({type:'FETCH_SUCCESS',payload:{summary:responseJson.currently.summary,city:responseJson.timezone,temp:responseJson.currently.temperature,iconTop:responseJson.currently.icon,weatherData:hourlyData,weatherAdvanceData:advanceData}})
+       //setState({...state,summary:responseJson.currently.summary,city:responseJson.timezone,temp:responseJson.currently.temperature,iconTop:responseJson.currently.icon,weatherData:hourlyData,weatherAdvanceData:advanceData,})
        
     }).catch((error)=>{
       console.log(error)
@@ -162,6 +198,7 @@ const Home=({navigation})=>{
   }
 
     return(
+      console.log(state),  
     <SafeAreaView style={theme}>  
     <ScrollView style={theme}>
     
@@ -211,7 +248,7 @@ const Home=({navigation})=>{
         data={state.weatherAdvanceData}
         renderItem={({item})=><View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
             <Text style={{fontSize:20}}>{item.day}</Text>
-            {displayTemperature(item.temp)}
+            {displayTemperature(item.temp)} 
             {selectIcon(item.icon)}
           </View>}
           keyExtractor={(item, index) => index.toString()}
@@ -223,7 +260,7 @@ const Home=({navigation})=>{
     )
 }
 
-export default Home
+export default Home2
 
 
 const Styles=StyleSheet.create({

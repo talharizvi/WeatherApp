@@ -6,7 +6,7 @@ import {
 import Lang from '../res/Languages.json';
 import LanguageContext from '../context/LanguageContext';
 import AsyncStorage from '@react-native-community/async-storage';
-import ItemView from '../components/ItemView';
+import LangItemView from '../components/LangItemView';
 
  const Language=({navigation})=>{
 
@@ -50,10 +50,10 @@ import ItemView from '../components/ItemView';
              <TouchableOpacity onPress={()=>{selectedLang.langDispatch({type:'lang',value:item.code})
              setTimeout(() => {
               navigation.navigate('Home')
-          }, 2000);
+          }, 1000);
              }}>
-             {/* <Text style={{fontSize:25}}>{item.lang}</Text> */}
-             <ItemView itemName={item.lang} backgroundColor="#f58938"></ItemView>
+            
+             <LangItemView itemName={item.lang} backgroundColor="#f58938" code={item.code}></LangItemView>
              </TouchableOpacity>
              }   
             />

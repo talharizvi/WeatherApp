@@ -7,7 +7,7 @@ import ItemView from '../components/ItemView';
 import UnitContext from '../context/UnitContext';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const TempUnits=()=>{
+const TempUnits=({navigation})=>{
     const selectedUnit=useContext(UnitContext)
     const [theme,setTheme]=useState(Styles.light)
     useEffect(()=>{
@@ -33,14 +33,20 @@ const TempUnits=()=>{
     <View style={theme}>
         <TouchableOpacity onPress={()=>{
             selectedUnit.unitDispatch({type:'unit',value:'si'})
+            setTimeout(() => {
+                navigation.navigate('Home')
+            }, 1000);
         }}>
-        <ItemView itemName="SI" backgroundColor="#f58938"/>
+        <ItemView itemName="si" backgroundColor="#f58938"/>
         </TouchableOpacity>
         
         <TouchableOpacity onPress={()=>{
             selectedUnit.unitDispatch({type:'unit',value:'us'})
+            setTimeout(() => {
+                navigation.navigate('Home')
+            }, 1000);
         }}>
-        <ItemView itemName="US" backgroundColor="#f58938"/>
+        <ItemView itemName="us" backgroundColor="#f58938"/>
         </TouchableOpacity>
     </View>
     </SafeAreaView>

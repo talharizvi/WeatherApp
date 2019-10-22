@@ -15,7 +15,9 @@ import {initialUnit} from './app/store/reducers/unitReducer';
 import UnitContext from './app/context/UnitContext';
 import langReducer from './app/store/reducers/languageReducer';
 import  {initialLang} from './app/store/reducers/languageReducer';
- 
+import {Provider} from 'react-redux';
+import store from './app/store/store';
+  
 const AppNavigator = createStackNavigator({
   Splash:{
     screen:Splash,
@@ -48,13 +50,15 @@ const App =()=>{
   const [lang,dispatch]=useReducer(langReducer,initialLang) 
   const [unit,unitDispatch]=useReducer(unitReducer,initialUnit)  
   return(
+    <Provider store={store}>
     <LocationProvider>
         <LanguageContext.Provider value={{selectedLang:lang,langDispatch:dispatch}}>
-          <UnitContext.Provider value={{selectedUnit:unit,unitDispatch:unitDispatch}}>
+          {/* <UnitContext.Provider value={{selectedUnit:unit,unitDispatch:unitDispatch}}> */}
               <AppContainer/>
-          </UnitContext.Provider>
+          {/* </UnitContext.Provider> */}
         </LanguageContext.Provider>
   </LocationProvider>
+  </Provider>
   )
 } 
 

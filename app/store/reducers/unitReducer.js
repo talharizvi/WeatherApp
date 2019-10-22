@@ -1,14 +1,12 @@
-
 export const initialUnit={
     defaultUnit:'si'
 }
 
-const unitReducer = (state, action) => {
+const unitReducer = (state = initialUnit , action) => {
 	switch (action.type) {
-    
-    case 'unit':
+    case 'change_unit':
       return {...state,
-        defaultUnit:action.value
+        defaultUnit:action.payload
      }
 	
 	default:

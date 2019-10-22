@@ -9,7 +9,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import LanguageContext from '../context/LanguageContext';
 import UnitContext from '../context/UnitContext';
 import NetInfo from "@react-native-community/netinfo";
-
+import unitReducerTest from '../store/reducers/unitReducer';
+import { connect } from 'react-redux';
 
 
 const hourlyData=[]
@@ -41,7 +42,7 @@ const reducer=(state,action)=>{
     }
 }
 
-const Home2=({navigation})=>{
+const Home=({navigation,unit})=>{
      
 //  const [state,setState]=useState({})
   const [location, setLocation] = useContext(LocationContext)
@@ -71,8 +72,9 @@ const Home2=({navigation})=>{
   const fetchData=()=>{
    console.log(location) 
    console.log(languageContext)
-   console.log(unitContext.selectedUnit)
-    fetch(`https://api.darksky.net/forecast/71cc1e8d001a106197699f73a2b45b05/${location.lat},${location.lon}?lang=${languageContext.selectedLang.defaultLang}&units=${unitContext.selectedUnit.defaultUnit}`)
+   //console.log(unitContext.selectedUnit)
+    fetch(`https://api.darksky.net/forecast/71cc1e8d001a106197699f73a2b45b05/${location.lat},${location.lon}?lang=${languageContext.selectedLang.defaultLang}&units=${unit}`)
+    //${unitContext.selectedUnit.defaultUnit}
     .then((response)=>response.json())
     .then((responseJson)=>{
       console.log(responseJson)
@@ -186,19 +188,22 @@ const Home2=({navigation})=>{
   function displayTemperature(temp){
      
       return(
-      (unitContext.selectedUnit.defaultUnit=="si")? 
+      //(unitContext.selectedUnit.defaultUnit=="si")
+      (unit=="si")
+      ? 
       <Text style={{fontSize:20}}>{temp} &deg;C</Text> :
       <Text style={{fontSize:20}}>{temp} K</Text>
-      )}
+      )
+    }
 
   if(advanceData.length==0){
     return(<View style={theme}>
         <ActivityIndicator style={{flex:1}} size="large" color="#0000ff" alignSelf='center' />
     </View>) 
   }
-
+  
     return(
-      console.log(state),  
+      console.log(unit),
     <SafeAreaView style={theme}>  
     <ScrollView style={theme}>
     
@@ -260,7 +265,16 @@ const Home2=({navigation})=>{
     )
 }
 
-export default Home2
+const mapStateToProps=(state)=>{
+  console.log(state.unitReducer.defaultUnit)
+  //console.log(state.defaultUnit)
+  return{
+    //  unit:state.defaultUnit
+      unit:state.unitReducer.defaultUnit
+    }
+}
+
+export default connect(mapStateToProps)(Home)
 
 
 const Styles=StyleSheet.create({

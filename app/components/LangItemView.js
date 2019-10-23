@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/Fontisto';
 const LangItemView=({itemName,backgroundColor,code})=>{
   const languageContext=useContext(LanguageContext)
     return(
-          console.log(languageContext.selectedLang.defaultLang,code),
+          //console.log(languageContext.selectedLang.defaultLang,code),
             <View style={{flexDirection:'row', backgroundColor:backgroundColor,margin:5,borderColor:'#75716e',borderWidth: 1,borderRadius:5,alignItems:'center',justifyContent:'space-between'}}>
                 <Text style={{fontSize:25}}>{itemName}</Text>
                 {chooseImage(languageContext.selectedLang.defaultLang,code)}

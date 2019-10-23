@@ -6,12 +6,14 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import CardView from '../components/CardView';
 import ItemView from '../components/ItemView';
+import {themes} from '../res/Themes';
 
 const Setting=({navigation})=>{
 
         var [switchValue,setSwitchValue]=useState(false)
-        var [theme,setTheme]=useState(Styles.light)
-        
+       // var [theme,setTheme]=useState(Styles.light)
+       var [theme,setTheme] = useState(themes.light) 
+
         useEffect(()=>{
            navigation.addListener ('didFocus', () =>{
             getAsyncData()
@@ -60,14 +62,23 @@ const Setting=({navigation})=>{
            // setSwitchValue(!switchValue)
             console.log("after",theme)
            
-            if(theme==Styles.light){
-                setTheme(Styles.dark)
+            // if(theme==Styles.light){
+            //     setTheme(Styles.dark)
+            //     setSwitchValue(true)
+            //     storeTheme(Styles.dark,true)
+            // }else{
+            //     setTheme(Styles.light)
+            //     setSwitchValue(false)
+            //     storeTheme(Styles.light,false)
+            // }
+            if(theme==themes.light){
+                setTheme(themes.dark)
                 setSwitchValue(true)
-                storeTheme(Styles.dark,true)
+                storeTheme(themes.dark,true)
             }else{
-                setTheme(Styles.light)
+                setTheme(themes.light)
                 setSwitchValue(false)
-                storeTheme(Styles.light,false)
+                storeTheme(themes.light,false)
             }
         }
 
@@ -75,8 +86,8 @@ const Setting=({navigation})=>{
         return(
         console.log("inside return"),
         console.log(switchValue,theme),
-        <SafeAreaView style={theme}>
-        <View style={theme}>
+        <SafeAreaView style={[theme,{flex:1}]}>
+        <View >
             <Text>Setting</Text>
             <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
             <Text style={{fontSize:20}}>Theme</Text>    

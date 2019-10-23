@@ -5,12 +5,15 @@ import {
 } from 'react-native';
 import images from '../res/images';
 import AsyncStorage from '@react-native-community/async-storage';
+import {themes} from '../res/Themes';
+//import Animation from 'lottie-react-native';
 
  const Splash=(props)=>{
 
-    const [theme,setTheme]=useState(Styles.light)
+    const [theme,setTheme]=useState(themes.light)
 
     useEffect(()=>{
+     //  this.animation.play()
         getData()
         setTimeout(() => {
             props.navigation.navigate('Home')
@@ -35,9 +38,20 @@ import AsyncStorage from '@react-native-community/async-storage';
     }
 
     
-        return(<View style={theme}>
+        return(<View style={[theme,{flex:1}]}>
             <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
             <Image style={{height:20,width:20}} source={images.pour_rain}/>
+            {/* <Animation
+                ref={animation=>{
+                    this.animation=animation
+                }}
+                style={{
+                    width:180,
+                    height:180
+                  }}
+                  loop={true}
+                  source="2106-suns-out.json"  
+            /> */}
             <Text>WeatherApp</Text>
             </View>
         </View>)

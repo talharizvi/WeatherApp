@@ -7,10 +7,10 @@ import images from '../res/images';
 import LocationContext from '../context/LocationContext';
 import AsyncStorage from '@react-native-community/async-storage';
 import LanguageContext from '../context/LanguageContext';
-import UnitContext from '../context/UnitContext';
 import NetInfo from "@react-native-community/netinfo";
 import unitReducerTest from '../store/reducers/unitReducer';
 import { connect } from 'react-redux';
+import {themes} from '../res/Themes';
 
 
 const hourlyData=[]
@@ -44,15 +44,13 @@ const reducer=(state,action)=>{
 
 const Home=({navigation,unit})=>{
      
-//  const [state,setState]=useState({})
   const [location, setLocation] = useContext(LocationContext)
-  const [theme,setTheme]=useState(Styles.light)
+  const [theme,setTheme]=useState(themes.light)
   const languageContext=useContext(LanguageContext)
-  const unitContext=useContext(UnitContext)  
-//
   const [state,dispatch] = useReducer(reducer,initialState)  
-//
+
   useEffect(()=>{
+  // const netWorkSubscription = NetInfo.isConnected.addEventListener('connectionChange', handleConnectivityChange());
    const subscription = navigation.addListener('didFocus',()=>{
      console.log('didFocus home')
     //  NetInfo.fetch().then(state => {
@@ -61,13 +59,18 @@ const Home=({navigation,unit})=>{
     //   alert(state.type)
     //   alert(state.isConnected)
     // });
+    
      getTheme()
      fetchData() 
     })
     subscription
+    //netWorkSubscription
+    //return()=>netWorkSubscription.remove()
     return()=>subscription.remove()
    
   },[Object.values(location)]);
+
+  //const handleConnectivityChange = (isConnected) => alert(isConnected);
 
   const fetchData=()=>{
    console.log(location) 
@@ -191,46 +194,42 @@ const Home=({navigation,unit})=>{
       //(unitContext.selectedUnit.defaultUnit=="si")
       (unit=="si")
       ? 
-      <Text style={{fontSize:20}}>{temp} &deg;C</Text> :
-      <Text style={{fontSize:20}}>{temp} K</Text>
+      <Text style={{fontSize:20,color:theme.textColor}}>{temp} &deg;C</Text> :
+      <Text style={{fontSize:20,color:theme.textColor}}>{temp} K</Text>
       )
     }
 
   if(advanceData.length==0){
-    return(<View style={theme}>
+    return(<View style={[theme,{flex:1}]}>
         <ActivityIndicator style={{flex:1}} size="large" color="#0000ff" alignSelf='center' />
     </View>) 
   }
   
     return(
+      console.log(theme),
       console.log(unit),
-    <SafeAreaView style={theme}>  
-    <ScrollView style={theme}>
-    
+    <SafeAreaView style={[theme,{flex:1}]}>  
+    <ScrollView >
       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
       <TouchableOpacity onPress={()=>navigation.navigate('Search')}>  
-      <Text>SEARCH</Text>
+      <Text style={{color:theme.textColor}}>SEARCH</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={()=>navigation.navigate('Setting')}>
-      <Text>SETTING</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={()=>alert("dfds")}>
-      <Image source={images.menu_verticle_icon} style={{width:30,height:30}}/>
+      <Text style={{color:theme.textColor}}>SETTING</Text>
       </TouchableOpacity>
 
       </View>
-    
+      
       <View style={{flexDirection:'row',justifyContent:'space-between',}}>
         <View style={{marginLeft:10}} >
           {displayTemperature(state.temp)}
-          <Text style={{fontSize:15}}>{state.city}</Text> 
-          <Text style={{fontSize:25}}>{state.summary}</Text> 
+          <Text style={{fontSize:15,fontWeight:'bold',color:theme.textColor}}>{state.city}</Text> 
+          <Text style={{fontSize:25,fontWeight:'bold',color:theme.textColor}}>{state.summary}</Text> 
           
        </View>
        
-       <View>
+       <View style={{borderRadius:5,backgroundColor:theme.accent,marginRight:10}}>
         {selectIcon(state.iconTop)}
        </View>
       </View>
@@ -239,10 +238,10 @@ const Home=({navigation,unit})=>{
         showsHorizontalScrollIndicator={false}
         horizontal
         data={state.weatherData}
-        renderItem={({item})=><View style={{marginHorizontal:5}}>
+        renderItem={({item})=><View style={{marginHorizontal:5,borderRadius:5,backgroundColor:theme.accent}}>
           {selectIcon(item.icon)}
           {displayTemperature(item.temp)}
-          <Text style={{marginHorizontal:5}}>{item.time}</Text>
+          <Text style={{marginHorizontal:5,color:theme.textColor}}>{item.time}</Text>
           </View>
           }
         style={{marginVertical:40}}
@@ -251,14 +250,14 @@ const Home=({navigation,unit})=>{
 
       <FlatList
         data={state.weatherAdvanceData}
-        renderItem={({item})=><View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
-            <Text style={{fontSize:20}}>{item.day}</Text>
+        renderItem={({item})=><View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center',borderRadius:5,backgroundColor:theme.accent,marginVertical:4,marginHorizontal:4}}>
+            <Text style={{fontSize:20,color:theme.textColor}}>{item.day}</Text>
             {displayTemperature(item.temp)} 
             {selectIcon(item.icon)}
           </View>}
           keyExtractor={(item, index) => index.toString()}
       />
-
+        
     
     </ScrollView>
     </SafeAreaView>

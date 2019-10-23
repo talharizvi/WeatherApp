@@ -5,13 +5,14 @@ import {
 } from 'react-native';
 import LocationContext from '../context/LocationContext';
 import AsyncStorage from '@react-native-community/async-storage';
+import {themes} from '../res/Themes';
 
 const Search=({navigation})=>{
 
     const [search,setSearch] = useState('Mumbai')
     const [data,setData]=useState([])
     const [location, setLocation] = useContext(LocationContext)
-    const [theme,setTheme]=useState(Styles.light)
+    const [theme,setTheme]=useState(themes.light)
 
     useEffect(()=>{
         getTheme()
@@ -46,8 +47,8 @@ const Search=({navigation})=>{
       };
 
         return(
-    <SafeAreaView style={theme}>
-        <View style={theme}>
+    <SafeAreaView style={[theme,{flex:1}]}>
+        <View>
             <Text>Search</Text>
             <TextInput
                 placeholder="Search Here..."

@@ -8,10 +8,11 @@ import ItemView from '../components/ItemView';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import {changeUnit} from '../store/actions/unitAction';
+import {themes} from '../res/Themes';
 
-const TempUnits=({unit,changeUnit,navigation})=>{
+const TempUnits=({unit,changeUnit,switchUnit,navigation})=>{
  //   const selectedUnit=useContext(UnitContext)
-    const [theme,setTheme]=useState(Styles.light)
+    const [theme,setTheme]=useState(themes.light)
     useEffect(()=>{
         getTheme()
     },[])
@@ -24,7 +25,7 @@ const TempUnits=({unit,changeUnit,navigation})=>{
             if(obj!=null){
                setTheme(obj) 
             }else{
-                console.log|('async value initial:'+obj)
+                console.log('async value initial:'+obj)
             }
         }catch(e){
             console.log(e.message)
@@ -32,11 +33,12 @@ const TempUnits=({unit,changeUnit,navigation})=>{
     }
     return(
         console.log(unit),
-        <SafeAreaView style={theme}>    
-    <View style={theme}>
+        <SafeAreaView style={[theme,{flex:1}]}>    
+    <View>
         <TouchableOpacity onPress={()=>{
             //selectedUnit.unitDispatch({type:'unit',value:'si'})
-            changeUnit('si')
+            // changeUnit('si')
+            switchUnit('si')
             setTimeout(() => {
                 navigation.navigate('Home')
             }, 1000);
@@ -46,7 +48,8 @@ const TempUnits=({unit,changeUnit,navigation})=>{
         
         <TouchableOpacity onPress={()=>{
             //selectedUnit.unitDispatch({type:'unit',value:'us'})
-            changeUnit('us')
+            //changeUnit('us')
+switchUnit('us')
             setTimeout(() => {
                 navigation.navigate('Home')
             }, 1000);
@@ -65,17 +68,18 @@ const mapStateToProps=(state)=>{
     }
 }
 
-// const mapDispatchToProps=dispatch=>{
-//     return{
-//         switchUnit:(unit)=>{
-//             dispatch(changeUnit(unit))
-//         }
-//     }
-// }
+const mapDispatchToProps=dispatch=>{
+    return{
+        switchUnit:(unit)=>{
+            dispatch(changeUnit(unit))
+        }
+    }
+}
 
 // export default TempUnits
 
-export default connect(mapStateToProps,{changeUnit})(TempUnits)
+// export default connect(mapStateToProps,{changeUnit})(TempUnits)
+export default connect(mapStateToProps,mapDispatchToProps)(TempUnits)
 
 const Styles=StyleSheet.create({
     light:{

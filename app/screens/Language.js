@@ -7,10 +7,11 @@ import Lang from '../res/Languages.json';
 import LanguageContext from '../context/LanguageContext';
 import AsyncStorage from '@react-native-community/async-storage';
 import LangItemView from '../components/LangItemView';
+import {themes} from '../res/Themes';
 
  const Language=({navigation})=>{
 
-   const [theme,setTheme]=useState(Styles.light)
+   const [theme,setTheme]=useState(themes.light)
    const [list,setList]=useState([])
    const selectedLang=useContext(LanguageContext) 
    useEffect(()=>{
@@ -36,13 +37,13 @@ import LangItemView from '../components/LangItemView';
   }
 
       if(list.length==0){
-        return(<View style={theme}>
+        return(<View style={[theme,{flex:1}]}>
             <ActivityIndicator style={{flex:1}} size="large" color="#0000ff" />
         </View>) 
       }
         return(
-        <SafeAreaView style={theme}>
-        <View style={theme}>
+        <SafeAreaView style={[theme,{flex:1}]}>
+        <View>
             <Text>Choose Languages</Text>
             <FlatList
              data={list}

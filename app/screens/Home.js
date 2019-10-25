@@ -42,7 +42,7 @@ const reducer=(state,action)=>{
     }
 }
 
-const Home=({navigation,unit})=>{
+const Home=({navigation,unit,lang})=>{
      
   const [location, setLocation] = useContext(LocationContext)
   const [theme,setTheme]=useState(themes.light)
@@ -50,18 +50,28 @@ const Home=({navigation,unit})=>{
   const [state,dispatch] = useReducer(reducer,initialState)  
 
   useEffect(()=>{
-  // const netWorkSubscription = NetInfo.isConnected.addEventListener('connectionChange', handleConnectivityChange());
-   const subscription = navigation.addListener('didFocus',()=>{
-     console.log('didFocus home')
-    //  NetInfo.fetch().then(state => {
+   
+    // const unsubscribe = NetInfo.addEventListener(state => {
     //   console.log("Connection type", state.type);
     //   console.log("Is connected?", state.isConnected);
-    //   alert(state.type)
-    //   alert(state.isConnected)
     // });
     
+    // unsubscribe()
+   const subscription = navigation.addListener('didFocus',()=>{
+     console.log('didFocus home')
+     NetInfo.fetch().then(state => {
+    
+      console.log("Is connectedadasda?", state.isConnected);
+      if(state.isConnected==true){
+        fetchData()
+      }else{
+        alert('not connect')
+      }
+      
+    });
+    
      getTheme()
-     fetchData() 
+      
     })
     subscription
     //netWorkSubscription
@@ -74,9 +84,9 @@ const Home=({navigation,unit})=>{
 
   const fetchData=()=>{
    console.log(location) 
-   console.log(languageContext)
+  // console.log(languageContext)
    //console.log(unitContext.selectedUnit)
-    fetch(`https://api.darksky.net/forecast/71cc1e8d001a106197699f73a2b45b05/${location.lat},${location.lon}?lang=${languageContext.selectedLang.defaultLang}&units=${unit}`)
+    fetch(`https://api.darksky.net/forecast/71cc1e8d001a106197699f73a2b45b05/${location.lat},${location.lon}?lang=${lang}&units=${unit}`)
     //${unitContext.selectedUnit.defaultUnit}
     .then((response)=>response.json())
     .then((responseJson)=>{
@@ -266,19 +276,13 @@ const Home=({navigation,unit})=>{
 
 const mapStateToProps=(state)=>{
   console.log(state.unitReducer.defaultUnit)
-  //console.log(state.defaultUnit)
+  console.log(state.languageReducer)
   return{
-    //  unit:state.defaultUnit
-      unit:state.unitReducer.defaultUnit
+      unit:state.unitReducer.defaultUnit,
+      lang:state.languageReducer.defaultLang
     }
 }
 
 export default connect(mapStateToProps)(Home)
 
 
-const Styles=StyleSheet.create({
-  light:{
-      flex:1,
-      backgroundColor:"#e6a893"
-  }
-})

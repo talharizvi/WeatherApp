@@ -108,13 +108,4 @@ const Setting=({navigation})=>{
 
 export default Setting
 
-const Styles=StyleSheet.create({
-    dark:{
-        flex: 1,
-        backgroundColor: "#632009",
-    },
-    light:{
-        flex:1,
-        backgroundColor:"#e6a893"
-    }
-})
+

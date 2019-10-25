@@ -78,10 +78,3 @@ const Search=({navigation})=>{
 }
 
 export default Search
-
-const Styles=StyleSheet.create({
-    light:{
-        flex:1,
-        backgroundColor:"#e6a893"
-    }
-  })

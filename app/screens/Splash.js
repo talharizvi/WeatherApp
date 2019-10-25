@@ -60,10 +60,3 @@ import {themes} from '../res/Themes';
 
 export default Splash
 
-const Styles=StyleSheet.create({
-    
-    light:{
-        flex:1,
-        backgroundColor:"#e6a893"
-    }
-})

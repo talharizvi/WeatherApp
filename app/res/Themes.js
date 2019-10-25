@@ -11,7 +11,7 @@ const dark = {
 
 // Light theme
 const light = {
-    accent: '#e02222',
+    accent: '#fc5400',
     textColor:'#050000',
     backgroundColor:"#e6a893",
 };

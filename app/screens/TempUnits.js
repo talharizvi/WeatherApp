@@ -49,7 +49,7 @@ const TempUnits=({unit,changeUnit,switchUnit,navigation})=>{
         <TouchableOpacity onPress={()=>{
             //selectedUnit.unitDispatch({type:'unit',value:'us'})
             //changeUnit('us')
-switchUnit('us')
+            switchUnit('us')
             setTimeout(() => {
                 navigation.navigate('Home')
             }, 1000);
@@ -67,10 +67,16 @@ const mapStateToProps=(state)=>{
         unit:state.unitReducer.defaultUnit
     }
 }
+// const mapStateToProps=({langue})=>{
+//     const{defaultUnit}=langue
+//     return{
+//         defaultUnit
+//     }
+// }
 
 const mapDispatchToProps=dispatch=>{
     return{
-        switchUnit:(unit)=>{
+         switchUnit:(unit)=>{
             dispatch(changeUnit(unit))
         }
     }
@@ -81,9 +87,3 @@ const mapDispatchToProps=dispatch=>{
 // export default connect(mapStateToProps,{changeUnit})(TempUnits)
 export default connect(mapStateToProps,mapDispatchToProps)(TempUnits)
 
-const Styles=StyleSheet.create({
-    light:{
-        flex:1,
-        backgroundColor:"#e6a893"
-    }
-  })

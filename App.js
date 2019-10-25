@@ -12,13 +12,16 @@ import Language from './app/screens/Language';
 import TempUnit from './app/screens/TempUnits';
 import unitReducer from './app/store/reducers/unitReducer';
 import {initialUnit} from './app/store/reducers/unitReducer';
-import UnitContext from './app/context/UnitContext';
 import langReducer from './app/store/reducers/languageReducer';
 import  {initialLang} from './app/store/reducers/languageReducer';
 import {Provider} from 'react-redux';
 import store from './app/store/store';
+import test from './app/screens/Test';
   
 const AppNavigator = createStackNavigator({
+  // Test:{
+  //   screen:test
+  // },
   Splash:{
     screen:Splash,
   },
@@ -48,15 +51,13 @@ const AppContainer = createAppContainer(AppNavigator)
  
 const App =()=>{ 
   const [lang,dispatch]=useReducer(langReducer,initialLang) 
-  const [unit,unitDispatch]=useReducer(unitReducer,initialUnit)  
+ // const [unit,unitDispatch]=useReducer(unitReducer,initialUnit)  
   return(
     <Provider store={store}>
     <LocationProvider>
-        <LanguageContext.Provider value={{selectedLang:lang,langDispatch:dispatch}}>
-          {/* <UnitContext.Provider value={{selectedUnit:unit,unitDispatch:unitDispatch}}> */}
+        {/* <LanguageContext.Provider value={{selectedLang:lang,langDispatch:dispatch}}> */}
               <AppContainer/>
-          {/* </UnitContext.Provider> */}
-        </LanguageContext.Provider>
+        {/* </LanguageContext.Provider> */}
   </LocationProvider>
   </Provider>
   )

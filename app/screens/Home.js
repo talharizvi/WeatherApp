@@ -46,48 +46,29 @@ const Home=({navigation,unit,lang})=>{
      
   const [location, setLocation] = useContext(LocationContext)
   const [theme,setTheme]=useState(themes.light)
-  const languageContext=useContext(LanguageContext)
   const [state,dispatch] = useReducer(reducer,initialState)  
 
   useEffect(()=>{
    
-    // const unsubscribe = NetInfo.addEventListener(state => {
-    //   console.log("Connection type", state.type);
-    //   console.log("Is connected?", state.isConnected);
-    // });
-    
-    // unsubscribe()
    const subscription = navigation.addListener('didFocus',()=>{
      console.log('didFocus home')
-     NetInfo.fetch().then(state => {
-    
-      console.log("Is connectedadasda?", state.isConnected);
-      if(state.isConnected==true){
-        fetchData()
-      }else{
-        alert('not connect')
-      }
-      
-    });
-    
+     fetchData()
+    //  NetInfo.fetch().then(state => {
+    //   console.log("Is connectedadasda?", state.isConnected);
+    // });
      getTheme()
-      
     })
     subscription
-    //netWorkSubscription
-    //return()=>netWorkSubscription.remove()
+   
     return()=>subscription.remove()
    
   },[Object.values(location)]);
 
-  //const handleConnectivityChange = (isConnected) => alert(isConnected);
+
 
   const fetchData=()=>{
    console.log(location) 
-  // console.log(languageContext)
-   //console.log(unitContext.selectedUnit)
     fetch(`https://api.darksky.net/forecast/71cc1e8d001a106197699f73a2b45b05/${location.lat},${location.lon}?lang=${lang}&units=${unit}`)
-    //${unitContext.selectedUnit.defaultUnit}
     .then((response)=>response.json())
     .then((responseJson)=>{
       console.log(responseJson)
@@ -201,11 +182,10 @@ const Home=({navigation,unit,lang})=>{
   function displayTemperature(temp){
      
       return(
-      //(unitContext.selectedUnit.defaultUnit=="si")
       (unit=="si")
       ? 
-      <Text style={{fontSize:20,color:theme.textColor}}>{temp} &deg;C</Text> :
-      <Text style={{fontSize:20,color:theme.textColor}}>{temp} K</Text>
+      <Text style={{fontSize:15,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{temp} &deg;C</Text> :
+      <Text style={{fontSize:15,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{temp} K</Text>
       )
     }
 
@@ -222,20 +202,19 @@ const Home=({navigation,unit,lang})=>{
     <ScrollView >
       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
       <TouchableOpacity onPress={()=>navigation.navigate('Search')}>  
-      <Text style={{color:theme.textColor}}>SEARCH</Text>
+      <Text style={{color:theme.textColor,fontFamily:"OpenSans-Bold"}}>SEARCH</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={()=>navigation.navigate('Setting')}>
-      <Text style={{color:theme.textColor}}>SETTING</Text>
+      <Text style={{color:theme.textColor,fontFamily:"OpenSans-Bold"}}>SETTING</Text>
       </TouchableOpacity>
-
       </View>
       
       <View style={{flexDirection:'row',justifyContent:'space-between',}}>
         <View style={{marginLeft:10}} >
           {displayTemperature(state.temp)}
-          <Text style={{fontSize:15,fontWeight:'bold',color:theme.textColor}}>{state.city}</Text> 
-          <Text style={{fontSize:25,fontWeight:'bold',color:theme.textColor}}>{state.summary}</Text> 
+          <Text style={{fontSize:15,fontWeight:'bold',color:theme.textColor,fontFamily:"OpenSans-ExtraBold"}}>{state.city}</Text> 
+          <Text style={{fontSize:20,fontWeight:'bold',color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{state.summary}</Text> 
           
        </View>
        
@@ -251,7 +230,7 @@ const Home=({navigation,unit,lang})=>{
         renderItem={({item})=><View style={{marginHorizontal:5,borderRadius:5,backgroundColor:theme.accent}}>
           {selectIcon(item.icon)}
           {displayTemperature(item.temp)}
-          <Text style={{marginHorizontal:5,color:theme.textColor}}>{item.time}</Text>
+          <Text style={{marginHorizontal:5,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{item.time}</Text>
           </View>
           }
         style={{marginVertical:40}}
@@ -261,14 +240,12 @@ const Home=({navigation,unit,lang})=>{
       <FlatList
         data={state.weatherAdvanceData}
         renderItem={({item})=><View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center',borderRadius:5,backgroundColor:theme.accent,marginVertical:4,marginHorizontal:4}}>
-            <Text style={{fontSize:20,color:theme.textColor}}>{item.day}</Text>
+            <Text style={{fontSize:20,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{item.day}</Text>
             {displayTemperature(item.temp)} 
             {selectIcon(item.icon)}
           </View>}
           keyExtractor={(item, index) => index.toString()}
       />
-        
-    
     </ScrollView>
     </SafeAreaView>
     )

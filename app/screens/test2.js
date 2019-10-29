@@ -1,0 +1,13 @@
+git add android/app/src/main/assets/fonts/OpenSans-Bold.ttf
+git add android/app/src/main/assets/fonts/OpenSans-BoldItalic.ttf
+git add android/app/src/main/assets/fonts/OpenSans-ExtraBold.ttf
+git add android/app/src/main/assets/fonts/OpenSans-ExtraBoldItalic.ttf
+git add android/app/src/main/assets/fonts/OpenSans-Italic.ttf
+git add android/app/src/main/assets/fonts/OpenSans-Light.ttf
+git add android/app/src/main/assets/fonts/OpenSans-LightItalic.ttf
+git add android/app/src/main/assets/fonts/OpenSans-Regular.ttf
+git add android/app/src/main/assets/fonts/OpenSans-Semibold.ttf
+git add android/app/src/main/assets/fonts/OpenSans-SemiboldItalic.ttf
+git add app/res/fonts/
+git add app/screens/test2.js
+git add react-native.config.js

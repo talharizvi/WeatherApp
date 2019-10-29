@@ -2,6 +2,7 @@ import React, {Component, useState,useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import NetInfo from "@react-native-community/netinfo";
 
+
 // export default class Test extends React.Component{
 
 //     constructor(){

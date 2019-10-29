@@ -88,9 +88,9 @@ const Setting=({navigation})=>{
         console.log(switchValue,theme),
         <SafeAreaView style={[theme,{flex:1}]}>
         <View >
-            <Text>Setting</Text>
+            <Text style={{fontFamily:"OpenSans-Bold"}}>Setting</Text>
             <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-            <Text style={{fontSize:20}}>Theme</Text>    
+            <Text style={{fontSize:20,fontFamily:"OpenSans-Bold"}}>Theme</Text>    
             <Switch 
             onValueChange={toggleSwitch}
             value={switchValue}/> 

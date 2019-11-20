@@ -14,7 +14,7 @@ const LangItemView=({itemName,backgroundColor,code,lang})=>{
       console.log(lang),
           //console.log(languageContext.selectedLang.defaultLang,code),
             <View style={{flexDirection:'row', backgroundColor:backgroundColor,margin:5,borderColor:'#75716e',borderWidth: 1,borderRadius:5,alignItems:'center',justifyContent:'space-between'}}>
-                <Text style={{fontSize:25}}>{itemName}</Text>
+                <Text style={{fontSize:25,fontFamily:'OpenSans-Regular'}}>{itemName}</Text>
                 {chooseImage(lang,code)}
             </View>
     )

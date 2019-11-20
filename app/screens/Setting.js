@@ -59,18 +59,8 @@ const Setting=({navigation})=>{
 
         function toggleSwitch(){
             console.log("before",switchValue)
-           // setSwitchValue(!switchValue)
             console.log("after",theme)
            
-            // if(theme==Styles.light){
-            //     setTheme(Styles.dark)
-            //     setSwitchValue(true)
-            //     storeTheme(Styles.dark,true)
-            // }else{
-            //     setTheme(Styles.light)
-            //     setSwitchValue(false)
-            //     storeTheme(Styles.light,false)
-            // }
             if(theme==themes.light){
                 setTheme(themes.dark)
                 setSwitchValue(true)

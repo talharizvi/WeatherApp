@@ -11,6 +11,7 @@ import NetInfo from "@react-native-community/netinfo";
 import unitReducerTest from '../store/reducers/unitReducer';
 import { connect } from 'react-redux';
 import {themes} from '../res/Themes';
+import fonts from '../res/fonts';
 
 
 const hourlyData=[]
@@ -180,12 +181,14 @@ const Home=({navigation,unit,lang})=>{
   }
 
   function displayTemperature(temp){
-     
+    // OpenSansBold
       return(
       (unit=="si")
       ? 
-      <Text style={{fontSize:15,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{temp} &deg;C</Text> :
-      <Text style={{fontSize:15,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{temp} K</Text>
+      // <Text style={{fontSize:15,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{temp} &deg;C</Text> :
+      // <Text style={{fontSize:15,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{temp} K</Text>
+      <Text style={{fontSize:15,color:theme.textColor,fontFamily:fonts.OpenSansBoldItalic}}>{temp} &deg;C</Text> :
+      <Text style={{fontSize:15,color:theme.textColor,fontFamily:fonts.OpenSansBoldItalic}}>{temp} K</Text>
       )
     }
 
@@ -202,19 +205,19 @@ const Home=({navigation,unit,lang})=>{
     <ScrollView >
       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
       <TouchableOpacity onPress={()=>navigation.navigate('Search')}>  
-      <Text style={{color:theme.textColor,fontFamily:"OpenSans-Bold"}}>SEARCH</Text>
+      <Text style={{color:theme.textColor,fontFamily:fonts.OpenSansBoldItalic}}>SEARCH</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={()=>navigation.navigate('Setting')}>
-      <Text style={{color:theme.textColor,fontFamily:"OpenSans-Bold"}}>SETTING</Text>
+      <Text style={{color:theme.textColor,fontFamily:fonts.OpenSansBoldItalic}}>SETTING</Text>
       </TouchableOpacity>
       </View>
       
       <View style={{flexDirection:'row',justifyContent:'space-between',}}>
         <View style={{marginLeft:10}} >
           {displayTemperature(state.temp)}
-          <Text style={{fontSize:15,fontWeight:'bold',color:theme.textColor,fontFamily:"OpenSans-ExtraBold"}}>{state.city}</Text> 
-          <Text style={{fontSize:20,fontWeight:'bold',color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{state.summary}</Text> 
+          <Text style={{fontSize:15,fontWeight:'bold',color:theme.textColor,fontFamily:fonts.OpenSansExtraBold}}>{state.city}</Text> 
+          <Text style={{fontSize:20,fontWeight:'bold',color:theme.textColor,fontFamily:fonts.OpenSansBoldItalic}}>{state.summary}</Text> 
           
        </View>
        
@@ -230,7 +233,7 @@ const Home=({navigation,unit,lang})=>{
         renderItem={({item})=><View style={{marginHorizontal:5,borderRadius:5,backgroundColor:theme.accent}}>
           {selectIcon(item.icon)}
           {displayTemperature(item.temp)}
-          <Text style={{marginHorizontal:5,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{item.time}</Text>
+          <Text style={{marginHorizontal:5,color:theme.textColor,fontFamily:fonts.OpenSansBoldItalic}}>{item.time}</Text>
           </View>
           }
         style={{marginVertical:40}}
@@ -240,7 +243,7 @@ const Home=({navigation,unit,lang})=>{
       <FlatList
         data={state.weatherAdvanceData}
         renderItem={({item})=><View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center',borderRadius:5,backgroundColor:theme.accent,marginVertical:4,marginHorizontal:4}}>
-            <Text style={{fontSize:20,color:theme.textColor,fontFamily:"OpenSans-Bold"}}>{item.day}</Text>
+            <Text style={{fontSize:20,color:theme.textColor,fontFamily:fonts.OpenSansBoldItalic}}>{item.day}</Text>
             {displayTemperature(item.temp)} 
             {selectIcon(item.icon)}
           </View>}
